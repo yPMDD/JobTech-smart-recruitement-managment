@@ -1,0 +1,180 @@
+{% extends 'layout.html' %} {% load static %}{% block content %}
+
+<!-- Header End -->
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+  <div class="container my-5 pt-5 pb-4">
+    <h1 class="display-3 text-white mb-3 animated slideInDown">Applications</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb text-uppercase">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">Applications</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- Header End -->
+
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">My Job Applications</h1>
+
+  <div class="bg-white shadow-md  overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Title</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resume</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cover letter</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applied Date</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% if applications %} {% for app in applications %}
+
+        <!-- Example Application 1 -->
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-medium text-gray-900">{{app.job.title}}</div>
+          </td>
+
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {% if app.resume %}
+            <a href="{{app.resume.url}}"><span class="text-green-700 hover:text-green-600">View resume</span></a>
+            {% else %}no resume uploaded{% endif %}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {% if app.cover_letter %}
+            <a href="{{app.cover_letter.url}}">
+              <span class="text-green-700 hover:text-green-600">View cover letter</span>
+            </a>
+            {% else %}no cover letter uploaded{% endif %}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-gray-500">{{app.date_applied|date:'d-m-y'}}</td>
+
+          <td class="px-6 py-4 whitespace-nowrap">
+            {% if app.status == 'accepted' %}
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              accepted
+            </span>
+            {% elif app.status == 'new' %}
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+              under review
+            </span>
+            {% elif app.status == 'rejcted' %}
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+              interviewing
+            </span>
+            {% else %}
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+              interviewing
+            </span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal{{app.id}}"
+              class="px-3 py-1.5 rounded-md text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+            >
+              <i class="fas fa-trash-alt mr-1"></i>
+              Withdraw
+            </button>
+          </td>
+        </tr>
+
+        <div
+          class="modal fade"
+          id="exampleModal{{app.id}}"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" style="margin-top: 5rem">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  WARNING
+                  <span>&#9888;</span>
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h3>Are you sure you want to withdraw this application :</h3>
+                <p>{{app.job.title}}</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  data-bs-dismiss="modal"
+                  class="mr-2 px-3 py-1.5 rounded-md text-sm font-medium bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                >
+                  <i class="fa-solid fa-x"></i>
+                  Close
+                </button>
+                <form method="post" action="{% url 'deleteApplication' id=app.id %}" class="d-inline">
+                  {% csrf_token %}
+                  <button
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal{{app.id}}"
+                    class="px-3 py-1.5 rounded-md text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+                  >
+                    <i class="fas fa-trash-alt mr-1"></i>
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} 
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-6 py-4 text-center text-gray-500">No applications found.</td>
+          </tr>
+          {% endif %} {% comment %}
+          <!-- Example Application 2 -->
+        </tr>
+
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-medium text-gray-900">UX Designer</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-gray-700">DesignHub</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-gray-500">April 28, 2023</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              Accepted
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">View</a>
+          </td>
+        </tr>
+
+        <!-- Example Application 3 -->
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-medium text-gray-900">Backend Engineer</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-gray-700">DataSystems</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-gray-500">March 10, 2023</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+              Rejected
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">View</a>
+          </td>
+        </tr>
+        {% endcomment %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{%endblock content%}

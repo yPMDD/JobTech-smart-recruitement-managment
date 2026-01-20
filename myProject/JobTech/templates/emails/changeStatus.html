@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>JobTech - Application Update</title>
+    <style type="text/css">
+      /* Client-specific resets */
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+      img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+
+      /* Better font rendering */
+      body { font-family: 'Inter', Arial, Helvetica, sans-serif; }
+
+      /* Fallbacks for Outlook */
+      .fallback-font {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 600px) {
+        .email-container {
+          width: 100% !important;
+        }
+        .stack-column,
+        .stack-column-center {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          direction: ltr !important;
+        }
+        .stack-column-center {
+          text-align: center !important;
+        }
+        .center-on-mobile {
+          text-align: center !important;
+          display: block !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          float: none !important;
+        }
+      }
+    </style>
+    <!--[if mso]>
+      <style type="text/css">
+        .fallback-font {
+          font-family: Arial, sans-serif;
+        }
+        .header-cell {
+          padding: 20px !important;
+        }
+      </style>
+    <![endif]-->
+  </head>
+  <body
+    style="margin: 0; padding: 0; background-color: #f9fafb; font-family: 'Inter', Arial, sans-serif; color: #1f2937;"
+  >
+    <!-- Preheader text (hidden in email clients) -->
+    <div style="display: none; max-height: 0px; overflow: hidden;">Your job application status has been updated</div>
+
+    <!-- Email container with fallback for Outlook -->
+    <table
+      role="presentation"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      align="center"
+      width="100%"
+      style="max-width: 42rem; background-color: #ffffff; margin: 0 auto;"
+    >
+      <tr>
+        <td style="padding: 0;">
+          <!--[if (gte mso 9)|(IE)]>
+          <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600">
+          <tr>
+          <td>
+          <![endif]-->
+
+          <!-- Header -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 1.5rem; background-color: #ffffff; border-bottom: 1px solid #e5e7eb;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="text-align: left;">
+                      <h1
+                        style="margin: 0; font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: #1f2937;"
+                        class="fallback-font"
+                      >
+                        JobTech
+                      </h1>
+                    </td>
+                    <td style="text-align: right;">
+                      <span style="font-size: 0.875rem; line-height: 1.25rem; color: #6b7280;" class="fallback-font">
+                        Application Update
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Email Content -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 2rem 1.5rem;">
+                <!-- Greeting -->
+                <h2
+                  style="margin: 0 0 1rem 0; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: #1f2937;"
+                  class="fallback-font"
+                >
+                  Hello {{application.applicant.username}},
+                </h2>
+
+                <!-- Status Box -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="background-color: #f9f9f9; border: 1px solid #e5e7eb; border-radius: 4px; margin-bottom: 1.5rem;"
+                >
+                  <tr>
+                    <td style="padding: 1.25rem;">
+                      <p
+                        style="margin: 0 0 0.5rem 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                        class="fallback-font"
+                      >
+                        Your application for
+                        <span style="font-weight: 500; color: #16a34a;">{{application.job.title}}</span>
+                        has been updated. The current status of your application is now:
+                      </p>
+                      <div style="margin-top: 0.75rem;">
+                        {% if application.status == 'accepted' %}
+                        <span
+                          style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; line-height: 1.25rem; font-weight: 600; border-radius: 9999px; background-color: #dcfce7; color: #166534;"
+                          class="fallback-font"
+                        >
+                          accepted
+                        </span>
+                        {% elif application.status == 'new' %}
+                        <span
+                          style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; line-height: 1.25rem; font-weight: 600; border-radius: 9999px; background-color: #fef9c3; color: #854d0e;"
+                          class="fallback-font"
+                        >
+                          under review
+                        </span>
+                        {% elif application.status == 'rejected' %}
+                        <span
+                          style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; line-height: 1.25rem; font-weight: 600; border-radius: 9999px; background-color: #fee2e2; color: #991b1b;"
+                          class="fallback-font"
+                        >
+                          rejected
+                        </span>
+                        {% else %}
+                        <span
+                          style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; line-height: 1.25rem; font-weight: 600; border-radius: 9999px; background-color: #dbeafe; color: #1e40af;"
+                          class="fallback-font"
+                        >
+                          waiting for interview
+                        </span>
+                        {% if date %}
+                        <p
+                          style="margin: 0 0 0.5rem 0; color: #374151; font-size: 1rem; line-height: 1.5rem;padding-top:6px"
+                          class="fallback-font"
+                        >
+                          Interview Date : {{date}}
+                        </p>
+                        {% endif %} {% endif %}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+                {% if application.status == 'accepted' %}
+                <!-- Accepted Status Content -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="margin-bottom: 2rem;"
+                >
+                  <tr>
+                    <td>
+                      <h3
+                        style="margin: 0 0 0.75rem 0; font-size: 1.125rem; line-height: 1.75rem; font-weight: 500; color: #1f2937;"
+                        class="fallback-font"
+                      >
+                        What happens next?
+                      </h3>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Our team will contact you for your contract signing and your starting day
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Be ready in the next 3 days and keep refining your skills
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Check your email regularly for updates
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                {% elif application.status == 'rejected' %}
+                <!-- Rejected Status Content -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="margin-bottom: 2rem;"
+                >
+                  <tr>
+                    <td>
+                      <h3
+                        style="margin: 0 0 0.75rem 0; font-size: 1.125rem; line-height: 1.75rem; font-weight: 500; color: #1f2937;"
+                        class="fallback-font"
+                      >
+                        What happens next?
+                      </h3>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    We appreciate your interest in the position, but unfortunately, we have decided to
+                                    move forward with other candidates.
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Keep refining your skills and see other job offers that can interest you
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Check your email regularly for updates
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                {% else %}
+                <!-- Default Status Content -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="margin-bottom: 2rem;"
+                >
+                  <tr>
+                    <td>
+                      <h3
+                        style="margin: 0 0 0.75rem 0; font-size: 1.125rem; line-height: 1.75rem; font-weight: 500; color: #1f2937;"
+                        class="fallback-font"
+                      >
+                        What happens next?
+                      </h3>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Our team will review your application
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Shortlisted candidates will be contacted within 2-3 business days for interview date
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Be ready for a potential video call interview in the contacted time frame
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.25rem 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                              <tr>
+                                <td width="24" style="vertical-align: top; padding-top: 0.25rem;">
+                                  <div
+                                    style="width: 8px; height: 8px; background-color: #16a34a; border-radius: 50%;"
+                                  ></div>
+                                </td>
+                                <td style="padding-left: 0.75rem; vertical-align: top;">
+                                  <p
+                                    style="margin: 0; color: #374151; font-size: 1rem; line-height: 1.5rem;"
+                                    class="fallback-font"
+                                  >
+                                    Check your email regularly for updates
+                                  </p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                {% endif %}
+
+                <!-- CTA Button -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="margin-bottom: 2rem;"
+                >
+                  <tr>
+                    <td>
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td align="center">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td align="center" bgcolor="#16a34a" style="border-radius: 4px;">
+                                  <a
+                                    href="http://127.0.0.1:8000/appliedJobs"
+                                    target="_blank"
+                                    style="display: inline-block; padding: 0.75rem 1.5rem; font-family: 'Inter', Arial, sans-serif; font-size: 1rem; line-height: 1.5rem; color: #ffffff; text-decoration: none; font-weight: 500;"
+                                    class="fallback-font"
+                                  >
+                                    View Your Application
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Footer -->
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="100%"
+            style="background-color: #f9fafb; border-top: 1px solid #e5e7eb;"
+          >
+            <tr>
+              <td style="padding: 1.5rem;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="padding-bottom: 0.75rem;">
+                      <p
+                        style="margin: 0; font-size: 0.875rem; line-height: 1.25rem; color: #4b5563;"
+                        class="fallback-font"
+                      >
+                        JobTech - Connecting Talent with Opportunity
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td style="padding-right: 1rem;">
+                            <a
+                              href="#"
+                              style="font-size: 0.875rem; line-height: 1.25rem; color: #4b5563; text-decoration: none;"
+                              class="fallback-font"
+                            >
+                              Home
+                            </a>
+                          </td>
+                          <td style="padding-right: 1rem;">
+                            <a
+                              href="#"
+                              style="font-size: 0.875rem; line-height: 1.25rem; color: #4b5563; text-decoration: none;"
+                              class="fallback-font"
+                            >
+                              Jobs
+                            </a>
+                          </td>
+                          <td>
+                            <a
+                              href="#"
+                              style="font-size: 0.875rem; line-height: 1.25rem; color: #4b5563; text-decoration: none;"
+                              class="fallback-font"
+                            >
+                              Contact
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!--[if (gte mso 9)|(IE)]>
+          </td>
+          </tr>
+          </table>
+          <![endif]-->
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

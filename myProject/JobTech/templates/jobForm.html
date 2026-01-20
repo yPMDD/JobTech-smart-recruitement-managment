@@ -1,0 +1,197 @@
+{% extends 'layout.html' %} {% load static %} {% block content %}
+
+<!-- Header End -->
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+  <div class="container my-5 pt-5 pb-4">
+    <h1 class="display-3 text-white mb-3 animated slideInDown">Post A Job</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb text-uppercase">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">Post A Job</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- Header End -->
+
+<div class="flex align-items-center" style="padding-right: 12rem; padding-left: 12rem">
+  <div class="wow fadeInUp" data-wow-delay="0.5s">
+    <h2 class="text-center mb-4">Post a new Job</h2>
+    <p>
+      Fields with a red star
+      <span class="text-danger">*</span>
+      are must to fill
+    </p>
+    <form action="/jobForm/" method="POST">
+      {% csrf_token %}
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="text" class="form-control" name="title" id="name" placeholder="Your Name" />
+            <label for="name">
+              Job Title
+              <span class="text-danger">*</span>
+            </label>
+            {% if form.title.errors %}
+            <div class="invalid-feedback">{% for error in form.title.errors %} {{ error }} {% endfor %}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="email" class="form-control" name="contact_email" id="email" placeholder="Your Email" />
+            <label for="email">
+              Contact Email
+              <span class="text-danger">*</span>
+            </label>
+            {% if form.contact_email.errors %}
+            <div class="invalid-feedback">{% for error in form.contact_email.errors %} {{ error }} {%endfor%}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="text" class="form-control" name="MinSalary" id="name" placeholder="Your Name" />
+            <label for="name">Min salary</label>
+            {% if form.MinSalary.errors %}
+            <div class="invalid-feedback">{% for error in form.MinSalary.errors %} {{ error }} {% endfor %}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="text" class="form-control" name="MaxSalary" id="email" placeholder="Your Email" />
+            <label for="email">Max salary</label>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="form-floating">
+            <select class="form-select" name="category" id="jobCategory" aria-label="Job Category">
+              <option selected disabled>Select a job category</option>
+              <option value="IT Services & Consulting">IT Services & Consulting</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Customer Service">Customer Service</option>
+              <option value="human-resource">Human Resource</option>
+              <option value="project-management">Project Management</option>
+              <option value="business-development">Business Development</option>
+              <option value="sales-communication">Sales & Communication</option>
+              <option value="teaching-education">Teaching & Education</option>
+              <option value="design-creative">Design & Creative</option>
+            </select>
+            <label for="jobCategory">
+              Job Category
+              <span class="text-danger">*</span>
+            </label>
+            {% if form.category.errors %}
+            <div class="invalid-feedback">{% for error in form.category.errors %} {{ error }} {% endfor %}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-floating">
+            <select class="form-select" name="remote" id="jobType" aria-label="Job Type">
+              <option selected disabled>Select a job type</option>
+              <option value="On Site">On Site</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Remote">Remote</option>
+            </select>
+            <label for="jobType">
+              Job Type
+              <span class="text-danger">*</span>
+            </label>
+            {% if form.remote.errors %}
+            <div class="invalid-feedback">{% for error in form.remote.errors %} {{ error }} {% endfor %}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-floating">
+            <input type="text" class="form-control" name="location" id="email" placeholder="Your Email" />
+            <label for="email">Location</label>
+            {% if form.location.errors %}
+            <div class="invalid-feedback">{% for error in form.location.errors %} {{ error }} {% endfor %}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-floating">
+            <textarea
+              class="form-control"
+              name="description"
+              placeholder="Leave a message here"
+              id="message"
+              style="height: 150px"
+            ></textarea>
+            <label for="message">
+              Job Description
+              <span class="text-danger">*</span>
+            </label>
+            {% if form.description.errors %}
+            <div class="invalid-feedback">{% for error in form.description.errors %} {{ error }} {% endfor%}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <textarea
+              class="form-control"
+              name="responsibility"
+              placeholder="Leave a message here"
+              id="message"
+              style="height: 150px"
+            ></textarea>
+            <label for="message">Job Responsibilities</label>
+            {% if form.responsibility.errors %}
+            <div class="invalid-feedback">{% for error in form.responsibility.errors %} {{ error }} {%endfor%}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating ">
+            <textarea
+              class="form-control"
+              name="qualifications"
+              placeholder="Leave a message here"
+              id="message"
+              style="height: 150px"
+            ></textarea>
+            <label for="message">Job Qualifications</label>
+          </div>
+        </div>
+        {% if form.qualifications.errors %}
+        <div class="invalid-feedback">{% for error in form.qualifications.errors %} {{ error }} {%endfor%}</div>
+        {% endif %}
+        <div class="col-md-6">
+          <div class="form-floating ">
+            <textarea
+              class="form-control "
+              name="skills"
+              placeholder="Leave a message here"
+              id="message"
+              style="height: 150px"
+            ></textarea>
+            <label for="message">
+              Job Skills required
+              <span class="text-danger">*</span>
+              (must be comma separated)
+            </label>
+          </div>
+        </div>
+        {% if form.qualifications.errors %}
+        <div class="invalid-feedback">{% for error in form.qualifications.errors %} {{ error }} {%endfor%}</div>
+        {% endif %} {% if form.non_field_errors %}
+        <div class="col-12">
+          <div class="alert alert-danger">{% for error in form.non_field_errors %} {{ error }} {% endfor %}</div>
+        </div>
+        {% endif %}
+        <div class="col-12">
+          <button class="btn btn-primary w-100 py-3" type="submit">Post</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{%endblock%}

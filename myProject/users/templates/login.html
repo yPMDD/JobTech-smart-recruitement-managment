@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="h-full bg-white">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="h-full">
+		{% if messages %}
+		<div
+			class="position-fixed"
+			style="top: 4.5rem; left: 0; width: 17rem; height: 2rem"
+		>
+			{% for message in messages %}
+			<div
+				x-data="{ show: false }"
+				x-init="
+				$nextTick(() => {
+					show = true;
+					setTimeout(() => show = false, 3000);
+				})	
+			"
+				x-show="show"
+				x-transition:enter="transition ease-in duration-800"
+				x-transition:enter-start="opacity-0 -translate-x-full"
+				x-transition:enter-end="opacity-100 translate-x-0"
+				x-transition:leave="transition ease-in duration-200"
+				x-transition:leave-start="opacity-100 translate-x-0"
+				x-transition:leave-end="opacity-0 -translate-x-full"
+				class="transform mb-1 px-3 py-3 shadow-lg bg-white text-black border-l-4 {% if message.tags == 'success' %} border-green-500 {% elif message.tags == 'error' %} border-red-500 {% elif message.tags == 'warning' %} border-yellow-500 {% elif message.tags == 'info' %} border-blue-500 {% else %} border-gray-400 {% endif %}"
+				style="z-index: 9999"
+			>
+				<button
+					@click="show = false"
+					class="border border-0 position-absolute"
+					style="
+						padding: 5px;
+						top: 0;
+						right: 0;
+						background: transparent;
+						color: grey;
+					"
+					aria-label="Dismiss"
+				>
+					&times;
+				</button>
+				<p class="text-sm font-medium">{{ message }}</p>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+			<div class="sm:mx-auto sm:w-full sm:max-w-sm">
+				<a href="/">
+					<img
+						class="mx-auto h-[100px] w-auto"
+						src="{% static 'img/fallback.png' %}"
+						alt="Your Company"
+				/></a>
+				<h2
+					class="mt-8 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
+				>
+					Sign in to your account
+				</h2>
+			</div>
+
+			<div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+				<form class="space-y-6" action="{% url 'users:login' %}" method="POST">
+					{% csrf_token %}
+
+					<!-- Email Field -->
+					<div>
+						<label
+							for="{{ form.email.id_for_label }}"
+							class="block text-sm font-medium text-gray-900"
+						>
+							Email address
+						</label>
+						{% if form.email.errors %}
+						<p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+						{% endif %}
+						<div class="mt-2">
+							<input
+								type="email"
+								name="{{ form.email.name }}"
+								id="{{ form.email.id_for_label }}"
+								value="{{ form.email.value|default:'' }}"
+								autocomplete="email"
+								class="border outline-none block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 sm:text-sm"
+							/>
+						</div>
+					</div>
+
+					<!-- Password Field -->
+					<div>
+						<div class="flex items-center justify-between">
+							<div>
+								<label
+									for="{{ form.password.id_for_label }}"
+									class="block text-sm font-medium text-gray-900"
+								>
+									Password
+								</label>
+								{% if form.password.errors %}
+								<p class="text-red-500 text-sm mt-1">
+									{{ form.password.errors.0 }}
+								</p>
+								{% endif %}
+							</div>
+							<div class="text-sm">
+								<a
+									href="#"
+									class="font-semibold text-green-600 hover:text-green-700"
+								>
+									Forgot password?
+								</a>
+							</div>
+						</div>
+						<div class="mt-2 flex border rounded focus:border-green-600">
+							<input
+								type="password"
+								name="{{ form.password.name }}"
+								id="{{ form.password.id_for_label }}"
+								autocomplete="current-password"
+								class="border-none outline-none block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:border-green-600 sm:text-sm"
+							/>
+							<button
+								type="button"
+								id="tgl_btn"
+								class="p-[2px] hover:bg-gray-200 rounded transition duration-400"
+								onclick="togglePassword()"
+							>
+								<svg
+									id="eyeIcon"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									class="h-5 w-5 block"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+									/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+									/>
+								</svg>
+								<svg
+									id="eyeOffIcon"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									class="h-5 w-5 hidden"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.956 9.956 0 012.542-4.258m3.396-2.3A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.973 9.973 0 01-4.204 5.182M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+									/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M3 3l18 18"
+									/>
+								</svg>
+							</button>
+						</div>
+					</div>
+
+					<!-- Submit Button -->
+					<div>
+						<button
+							type="submit"
+							class="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 transition duration-400"
+						>
+							Sign in
+						</button>
+					</div>
+
+					<!-- Non-field errors (e.g., invalid credentials) -->
+					{% if form.non_field_errors %}
+					<ul class="text-red-500 text-sm mb-4">
+						{% for error in form.non_field_errors %}
+						<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</form>
+
+				<p class="mt-10 text-center text-sm/6 text-gray-500">
+					Not a member?
+					<a
+						href="/users/signup/"
+						class="font-semibold text-green-600 hover:text-green-700"
+						>Create an account</a
+					>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script>
+	function togglePassword() {
+		const passwordInput = document.querySelector(
+			"input[type='password'], input[type='text'][name='{{ form.password.name }}']"
+		);
+		const eyeOffIcon = document.getElementById("eyeIcon");
+		const eyeIcon = document.getElementById("eyeOffIcon");
+
+		const isPassword = passwordInput.getAttribute("type") === "password";
+		passwordInput.setAttribute("type", isPassword ? "text" : "password");
+
+		eyeIcon.classList.toggle("hidden", !isPassword);
+		eyeOffIcon.classList.toggle("hidden", isPassword);
+	}
+</script>

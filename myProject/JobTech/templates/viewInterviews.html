@@ -1,0 +1,126 @@
+{% extends "layout.html" %} {% load static %} {% block content %}
+
+<!-- Header End -->
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+  <div class="container my-5 pt-5 pb-4">
+    <h1 class="display-3 text-white mb-3 animated slideInDown">Interviews</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb text-uppercase">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">Interviews</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- Header End -->
+<div class="max-w-7xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Interview History</h1>
+
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Candidate
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Position
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Scheduled Date
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Status
+          </th>
+
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% if interviews %}
+        {% for inter in interviews %}
+        <!-- Sample Data Row 1 -->
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img
+                  class="h-10 w-10 rounded-full"
+                  src="{{inter.applicant.picture.url}}"
+                  alt=""
+                />
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900">{{inter.applicant.username}}</div>
+                <div class="text-sm text-gray-500">{{inter.applicant.email}}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{{inter.job.title}}</div>
+            <div class="text-sm text-gray-500">{{inter.job.category}}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{{inter.date}}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            {% if inter.status == 'accepted' %}
+                        <span
+                          style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; line-height: 1.25rem; font-weight: 600; border-radius: 9999px; background-color: #dcfce7; color: #166534;"
+                          class="fallback-font"
+                        >
+                          accepted
+                        </span>
+                        {% elif inter.status == 'scheduled' %}
+                        <span
+                          style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; line-height: 1.25rem; font-weight: 600; border-radius: 9999px; background-color: #fef9c3; color: #854d0e;"
+                          class="fallback-font"
+                        >
+                          scheduled
+                        </span>
+                        {% elif inter.status == 'rejected' %}
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                            Rejected
+                        </span>{% endif %}
+          </td>
+
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <div class="flex gap-2">
+            <form action="{% url "changeAppStatus" id=inter.application.id status="rejected"  %}" method="POST">{% csrf_token %}<button class="px-3 py-1.5 border-none border-red-300 bg-red-100 text-red-700 hover:bg-red-200 text-sm font-medium rounded-md  transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-200">Reject</button></form>
+            <form action="{% url "changeAppStatus" id=inter.application.id status="accepted"  %}" method="POST">{% csrf_token %}<button class="px-3 py-1.5 border-none border-green-300 bg-green-100 text-green-700 hover:bg-green-200 text-sm font-medium rounded-md  transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-200">accept</button></form>
+                </div>
+        </td>
+        </tr>{% endfor %}
+        {% endif %}
+        {% comment %}
+        <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+            Completed
+          </span>
+        </td>
+
+        <!-- Sample Data Row 2 -->
+
+        <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+            Scheduled
+          </span>
+        </td>
+        {% endcomment %}
+
+        <!-- Sample Data Row 3 -->
+        {% comment %}
+        <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+            Canceled
+          </span>
+        </td>
+        {% endcomment %}
+      </tbody>
+    </table>
+  </div>
+  {% endblock content %}
+</div>
