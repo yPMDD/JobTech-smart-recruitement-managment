@@ -154,7 +154,7 @@
 								{{user.first_name}} {{user.last_name}} 
 								
 								{% elif user.username %}
-								<img class="rounded-lg h-2  " src="{% static "{{user.picture.url}}" %} %}" alt="">
+								<img class="rounded-lg h-2  " src="{{ user.picture.url }}" alt="">
 								{{user.username}}
 								{%else%}
 								Signup / Login

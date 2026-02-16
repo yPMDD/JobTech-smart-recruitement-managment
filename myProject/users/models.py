@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
     )
     email = models.EmailField(unique=True, max_length=191)
     role = models.CharField(max_length=30, choices=ROLE_CHOICES)
-    picture = models.ImageField(default="unknown.jpg", upload_to='profile_pics/', blank=True, null=True)
+    picture = models.ImageField(default="unknown.jpg", upload_to='media/media/', blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     
 
