@@ -5,6 +5,9 @@ from users.models import CustomUser
 
 
 class Job(models.Model):
+    class Meta:
+        db_table = 'jobtech_job'
+
     title = models.CharField(
         max_length=75,
         verbose_name="Job Title",
@@ -128,6 +131,9 @@ class Job(models.Model):
 
 
 class Application(models.Model):
+    class Meta:
+        db_table = 'jobtech_application'
+
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     applicant = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     cover_letter = models.TextField(
@@ -163,6 +169,9 @@ class Application(models.Model):
     
 
 class interview(models.Model):
+    class Meta:
+        db_table = 'jobtech_interview'
+
     job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True)
     applicant = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     application = models.ForeignKey(Application, on_delete=models.CASCADE)
