@@ -20,9 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'JobTech',
-    'users',
     'users'
-
     # Add your apps here
 ]
 import certifi
