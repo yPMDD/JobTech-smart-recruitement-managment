@@ -11,6 +11,8 @@ python manage.py collectstatic --noinput
 
 # 2. Database Migrations
 echo "Applying migrations..."
+python manage.py makemigrations jobtech
+python manage.py makemigrations users
 python manage.py migrate
 
 
