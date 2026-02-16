@@ -10,21 +10,22 @@ echo "Running collectstatic..."
 python manage.py collectstatic --noinput
 
 # 2. Reset Migrations
-echo "Regenerating JobTech migrations..."
-# Ensure the conflicting migration is gone (if it wasn't deleted by git)
-rm -f JobTech/migrations/0001_initial.py
-python manage.py makemigrations JobTech
+echo "Regenerating migrations..."
+python manage.py makemigrations jobtech
+python manage.py makemigrations users
 python manage.py makemigrations
 
 echo "Resetting Database History..."
-# Force Django to forget it ever ran JobTech migrations
-# We ignore errors here in case the app label is already reset or missing
-python manage.py migrate --fake JobTech zero || true
+# Force Django to forget previous migrations for these apps
+python manage.py migrate --fake jobtech zero || true
+python manage.py migrate --fake users zero || true
 
 echo "Applying Migrations..."
-# This should now create the 'jobtech_job' table because of the fresh migration
+# This will now create the tables from scratch in the database if they don't exist
+# or synchronize them if they do.
 python manage.py migrate
 
 # 3. Start Server
 echo "Starting Gunicorn..."
 exec gunicorn Home.wsgi
+
