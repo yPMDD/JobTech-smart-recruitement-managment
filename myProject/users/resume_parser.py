@@ -4,8 +4,20 @@ import PyPDF2
 import docx
 from collections import defaultdict
 
-# Load the English language model
-nlp = spacy.load("en_core_web_sm")
+# Global variable for the model
+nlp = None
+
+def load_spacy_model():
+    global nlp
+    if nlp is None:
+        try:
+            nlp = spacy.load("en_core_web_sm")
+        except OSError:
+            print("Downloading 'en_core_web_sm' model...")
+            from spacy.cli import download
+            download("en_core_web_sm")
+            nlp = spacy.load("en_core_web_sm")
+    return nlp
 
 def extract_text_from_file(file_path):
     """Extract text from PDF or DOCX files"""
@@ -13,6 +25,7 @@ def extract_text_from_file(file_path):
     if file_path.endswith('.pdf'):
         with open(file_path, 'rb') as f:
             reader = PyPDF2.PdfReader(f)
+
             for page in reader.pages:
                 text += page.extract_text()
     elif file_path.endswith('.docx'):
@@ -30,7 +43,11 @@ def extract_resume_sections(text):
     }
     
     # Convert to lowercase for case-insensitive matching
+    # Convert to lowercase for case-insensitive matching
     text_lower = text.lower()
+    
+    # Load model (lazy loading)
+    nlp = load_spacy_model()
     doc = nlp(text_lower)
     
     # SECTION 1: SKILLS EXTRACTION
