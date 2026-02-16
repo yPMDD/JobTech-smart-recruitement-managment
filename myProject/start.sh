@@ -10,8 +10,10 @@ echo "Running collectstatic..."
 python manage.py collectstatic --noinput
 
 # 2. Database Migrations
+echo "Checking for model changes..."
+python manage.py makemigrations --noinput
 echo "Applying migrations (with --fake-initial)..."
-python manage.py migrate --fake-initial
+python manage.py migrate --fake-initial --noinput
 
 
 
