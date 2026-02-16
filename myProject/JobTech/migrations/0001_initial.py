@@ -31,6 +31,11 @@ class Migration(migrations.Migration):
                 ('img', models.ImageField(blank=True, default='fallback.png', null=True, upload_to='', verbose_name='Company logo')),
                 ('date', models.DateTimeField(auto_now_add=True, verbose_name='Posting Date')),
                 ('poster', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('status', models.CharField(choices=[('active', 'active'), ('closed', 'closed')], default='active', max_length=20, verbose_name='Job Status')),
+                ('skills', models.CharField(blank=True, help_text='Comma-separated list of required skills', max_length=255, null=True, verbose_name='Required Skills')),
             ],
+            options={
+                'db_table': 'jobtech_job',
+            },
         ),
     ]
