@@ -10,8 +10,9 @@ echo "Running collectstatic..."
 python manage.py collectstatic --noinput
 
 # 2. Database Migrations
-echo "Applying migrations..."
-python manage.py migrate
+echo "Applying migrations (with --fake-initial)..."
+python manage.py migrate --fake-initial
+
 
 
 # 3. Start Server
