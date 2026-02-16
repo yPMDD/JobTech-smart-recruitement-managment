@@ -8,4 +8,5 @@ cmds = ["python -m venv .venv", ". .venv/bin/activate", "pip install -r requirem
 cmds = ["python manage.py collectstatic --noinput"]
 
 [start]
-cmd = "gunicorn Home.wsgi"
+cmd = "python manage.py migrate && gunicorn Home.wsgi"
+
