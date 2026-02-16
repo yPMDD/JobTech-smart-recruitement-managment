@@ -11,11 +11,9 @@ python manage.py collectstatic --noinput
 
 # 2. Database Migrations
 echo "Applying migrations..."
-python manage.py makemigrations jobtech
-python manage.py makemigrations users
 python manage.py migrate
 
 
 # 3. Start Server
-echo "Starting Gunicorn..."
-exec gunicorn Home.wsgi
+echo "Starting Gunicorn on port ${PORT:-8000}..."
+exec gunicorn Home.wsgi --bind 0.0.0.0:${PORT:-8000} --timeout 120 --workers 2
