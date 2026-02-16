@@ -2,7 +2,9 @@
 nixPkgs = ["python3", "gcc", "gnumake", "python311Packages.pip", "stdenv.cc.cc.lib"]
 
 [phases.install]
-cmds = ["python -m venv .venv", ". .venv/bin/activate", "pip install -r requirements.txt", "python -m spacy download en_core_web_sm"]
+cmds = ["python -m venv .venv", ". .venv/bin/activate && pip install -r requirements.txt && python -m spacy download en_core_web_sm"]
+
+
 
 [phases.build]
 cmds = ["python manage.py collectstatic --noinput"]
