@@ -150,7 +150,7 @@
 								>
 								
 								{%if user.is_authenticated and user.first_name and user.last_name%}
-								<img class="rounded-full h-9 w-9 p-1" src="{{user.picture.url}} " alt="">
+								<img class="rounded-full h-9 w-9 p-1" src="{{ user.picture.url }}" alt="">
 								{{user.first_name}} {{user.last_name}} 
 								
 								{% elif user.username %}
