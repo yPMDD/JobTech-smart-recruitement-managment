@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
     )
     email = models.EmailField(unique=True, max_length=191)
     role = models.CharField(max_length=30, choices=ROLE_CHOICES)
-    picture = models.ImageField(default="unknown.jpg", upload_to='media/', blank=True, null=True)
+    picture = models.ImageField(default="unknown.jpg", upload_to='profile_pics/', blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     
 
@@ -30,8 +30,9 @@ class CustomUser(AbstractUser):
 class Candidate(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     username = models.CharField(max_length=150, blank=True, null=True)
-    resume = models.FileField(upload_to='media/', blank=True, null=True)
-    cover_letter = models.FileField(upload_to='media/', blank=True, null=True)
+    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
+    cover_letter = models.FileField(upload_to='cover_letters/', blank=True, null=True)
+
     skills = models.TextField(blank=True, null=True)
     experience = models.TextField(blank=True, null=True)
     education = models.TextField(blank=True, null=True)

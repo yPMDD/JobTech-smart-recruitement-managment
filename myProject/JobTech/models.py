@@ -98,6 +98,7 @@ class Job(models.Model):
     )
     img = models.ImageField(
         default='fallback.png',
+        upload_to='company_logos/',
         blank=True,
         null=True,
         verbose_name="Company logo"
